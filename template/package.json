@@ -1,0 +1,17 @@
+{
+  "name": "project",
+  "version": "0.0.1",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "lint-staged": {
+    "*.{svelte,ts,js}": [
+      "svelte-check",
+      "eslint"
+    ],
+    "supabase/migrations/*.sql": [
+      "supabase test db"
+    ]
+  }
+}
