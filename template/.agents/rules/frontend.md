@@ -1,5 +1,11 @@
+---
+id: frontend
+version: 1.0.0
+enforcement: declarative
+---
+
 # Reglas SvelteKit Frontend
 
 - **Solo Runes**: Es obligatorio usar exclusivamente la sintaxis de Runes de Svelte 5 (`$state`, `$derived`, `$props`, `$effect`).
-- **Fronteras validadas**: Valida todas las entradas de usuario con Valibot en la frontera (runtime) antes de intentar cualquier mutación a la base de datos.
-- **Separación de Lógica**: Separa la lógica de negocio pura de la lógica de UI de los componentes.
+- **Fronteras validadas**: Toda entrada externa de usuario debe ser validada con `Valibot` en tiempo de ejecución (runtime) antes de ejecutar cualquier mutación de estado o llamada a base de datos.
+- **Separación de Lógica**: La lógica de negocio debe estar extraída y aislada de los componentes UI.

@@ -1,19 +1,25 @@
-# TASK
+---
+id: [feature-id]
+domain: [domain-id]
+prd: [prd-id]
+status: READY # State Machine: READY -> IN_PROGRESS -> IMPLEMENTED -> VALIDATING -> DONE
+traceability:
+  skill: null
+  rules: []
+evidence: null
+---
 
-## OBJETIVO
-[Descripción breve]
+# Feature: [feature-id]
 
-## DO (Permitido)
-- 
-- 
+## Contexto (Lazy Context)
+- **PRD**: [Referencia a docs/product/[prd].md]
+- **Domain**: [Referencia a docs/domains/[domain].md]
 
-## DON'T (Prohibido)
-- 
-- 
+> **Nota para el Agente:** Carga únicamente el contexto estrictamente necesario de las referencias anteriores para tomar tu próxima decisión.
 
-## DONE WHEN (Criterios de Éxito Objetivos)
-- [ ] PRD requirement satisfied
-- [ ] Domain rules satisfied
-- [ ] Implementation exists
-- [ ] Relevant tests exist & pass
-- [ ] Quality gate passes
+## Objetivo
+[Describe aquí el objetivo o pide al usuario completarlo]
+
+## Requisitos
+- [ ] 
+- [ ] 

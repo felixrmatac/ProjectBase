@@ -1,5 +1,10 @@
-# Protocolo de Testing
+---
+id: testing
+version: 1.0.0
+enforcement: machine-enforced (via Vitest and pgTAP)
+---
 
-- **Frontend y Lógica**: Usa **Vitest** para testear el frontend y la lógica de negocio pura de la aplicación.
-- **Base de datos (DB/RLS)**: Usa **pgTAP** para crear tests de la base de datos y de las políticas de RLS. Ubícalos en `supabase/tests/`.
-- **Calidad**: Ninguna tarea se da por terminada con tests rotos o tipos de base de datos desincronizados.
+# Reglas de Testing
+
+- **Frontend y Lógica**: El framework oficial para testear componentes y lógica de negocio es **Vitest**.
+- **Base de datos (DB/RLS)**: Las políticas de Row Level Security (RLS) y lógica de base de datos se testean exclusivamente con **pgTAP** en `supabase/tests/`.
