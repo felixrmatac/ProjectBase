@@ -1,3 +1,18 @@
+---
+id: cognitive-ui-system
+domain: active-recall
+prd: docs/product/ui-system-prd.md
+status: VALIDATING
+traceability:
+  skill: new-feature@1.0.0
+  rules:
+    - frontend-design
+validation:
+  quality_gate:
+    status: pending
+    evidence: null
+---
+
 # Task: Cognitive UI System
 
 ## Feature

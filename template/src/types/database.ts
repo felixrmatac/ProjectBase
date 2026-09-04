@@ -1,15 +1,59 @@
-/**
- * ⚠️ INITIALIZATION REQUIRED
- *
- * Ejecuta ./scripts/generate-db-types.sh tras iniciar Supabase
- * para generar este archivo automáticamente.
- */
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
+
 export type Database = {
   public: {
-    Tables: {};
-    Views: {};
-    Functions: {};
-    Enums: {};
-    CompositeTypes: {};
+    Tables: {
+      study_reviews: {
+        Row: {
+          id: string;
+          user_id: string;
+          card_id: string;
+          rating: number;
+          recall_answer: string | null;
+          interval_days: number;
+          ease_factor: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          card_id: string;
+          rating: number;
+          recall_answer?: string | null;
+          interval_days?: number;
+          ease_factor?: number;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          card_id?: string;
+          rating?: number;
+          recall_answer?: string | null;
+          interval_days?: number;
+          ease_factor?: number;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      [_ in never]: never;
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
   };
 };

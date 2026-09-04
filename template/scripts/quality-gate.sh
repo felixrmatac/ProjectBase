@@ -12,6 +12,7 @@ compute_checksum() {
     [[ -e "$p" ]] && paths+=" $p"
   done
   if [[ -n "$paths" ]]; then
+    # shellcheck disable=SC2086
     if command -v md5sum >/dev/null 2>&1; then
       checksum=$(find $paths -type f 2>/dev/null | sort | xargs -r md5sum | md5sum | cut -d' ' -f1)
     elif command -v shasum >/dev/null 2>&1; then
@@ -26,6 +27,7 @@ CODEBASE_CHECKSUM=$(compute_checksum)
 fail() {
   local check="$1"
   local err="$2"
+  # shellcheck disable=SC2001
   err="$(echo "$err" | sed 's/^/      /g')"
   
   cat <<YAML
@@ -135,6 +137,7 @@ check_shellcheck() {
   local scripts
   scripts=$(find scripts -name "*.sh" 2>/dev/null || true)
   if [[ -n "$scripts" ]]; then
+    # shellcheck disable=SC2086
     shellcheck $scripts || return 1
   fi
   if [[ -f "scaffold_template.sh" ]]; then
@@ -184,8 +187,8 @@ else
     case "$file" in
       docs/*|*.md|.agents/*) ;;
       package.json|*config*.js|tsconfig*) RUN_FRONTEND=true; RUN_DB=true; RUN_DOCS_ONLY=false ;;
-      src/routes/*|src/components/*|*.svelte|src/lib/*|*.ts|tests/*) RUN_FRONTEND=true; RUN_DOCS_ONLY=false ;;
       src/types/database.ts) RUN_DB=true; RUN_FRONTEND=true; RUN_DOCS_ONLY=false ;;
+      src/routes/*|src/components/*|*.svelte|src/lib/*|*.ts|tests/*) RUN_FRONTEND=true; RUN_DOCS_ONLY=false ;;
       supabase/*) RUN_DB=true; RUN_DOCS_ONLY=false ;;
       *) RUN_FRONTEND=true; RUN_DB=true; RUN_DOCS_ONLY=false ;;
     esac
