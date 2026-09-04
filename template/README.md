@@ -65,7 +65,7 @@ flowchart TD
 
 ---
 
-## Repository Structure
+## Directory Structure
 
 ```text
 .
@@ -122,7 +122,6 @@ flowchart TD
 │   └── seed.sql                     # Seed data for development
 ├── eslint.config.js                 # ESLint flat config with Svelte 5 parser
 ├── package.json                     # Scripts, devDependencies, and test runners
-├── scaffold_template.sh             # Shell script to unpack framework into root
 ├── tsconfig.json                    # Strict TypeScript configuration
 └── vitest.config.ts                 # Vitest test runner configuration
 ```
@@ -196,7 +195,6 @@ bash scripts/quality-gate.sh
 ### 1. Working Inside This Repository
 ```bash
 # Install dependencies
-cd template
 npm ci
 
 # Run test suites
@@ -208,24 +206,6 @@ npm run typecheck
 
 # Run the complete Quality Gate
 bash scripts/quality-gate.sh
-```
-
-### 2. Scaffolding a New Project
-To bootstrap a new repository with the Agent Engineering Framework:
-```bash
-# 1. Initialize a new repo
-git init my-app
-cd my-app
-
-# 2. Copy the template and scaffolding script
-cp -a /path/to/ProjectBase/scaffold_template.sh .
-cp -a /path/to/ProjectBase/template .
-
-# 3. Run the scaffolding script
-./scaffold_template.sh
-
-# 4. Install dependencies and start working
-npm ci
 ```
 
 ---
