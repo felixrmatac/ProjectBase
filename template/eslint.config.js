@@ -1,10 +1,29 @@
 import svelte from 'eslint-plugin-svelte';
+import * as svelteParser from 'svelte-eslint-parser';
+import tseslint from 'typescript-eslint';
 
 export default [
   ...svelte.configs['flat/recommended'],
+  ...tseslint.configs.recommended.map((cfg) => ({
+    ...cfg,
+    files: ['**/*.ts', '**/*.svelte']
+  })),
+  {
+    ignores: ['src/types/database.ts']
+  },
   {
     files: ['**/*.svelte'],
+    languageOptions: {
+      parser: svelteParser,
+      parserOptions: {
+        parser: tseslint.parser,
+        svelteFeatures: {
+          generate: false
+        }
+      }
+    },
     rules: {
+      'prefer-const': 'off',
       'no-restricted-syntax': [
         'error',
         {
