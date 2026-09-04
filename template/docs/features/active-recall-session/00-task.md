@@ -11,7 +11,10 @@ traceability:
     - frontend-design
     - database
     - testing
-evidence: null
+validation:
+  quality_gate:
+    status: pending
+    evidence: null
 ---
 
 # Feature: active-recall-session
