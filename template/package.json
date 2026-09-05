@@ -5,7 +5,11 @@
   "scripts": {
     "lint": "eslint .",
     "test": "vitest run",
-    "typecheck": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "db:reset": "supabase db reset",
+    "db:types": "supabase gen types typescript --local > src/types/database.ts",
+    "quality-gate": "npm run check && npm run lint && npm run test",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
     "lint-staged": {
     "*.{svelte,ts,js}": [
