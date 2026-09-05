@@ -6,7 +6,7 @@
 
 ## Overview
 
-The **Agent Engineering Framework V4.1** is an engineering foundation designed specifically for autonomous AI agents (such as Google Antigravity) and human developers working in pair programming. Rather than acting as a simple code starter, it defines a rigid separation of concerns:
+The **Agent Engineering Framework V4.1** is an engineering foundation designed specifically for autonomous AI agents (such as opencode) and human developers working in pair programming. Rather than acting as a simple code starter, it defines a rigid separation of concerns:
 
 - **Orchestration**: Structured task state machines with explicit evidence requirements.
 - **Rules**: Deterministic architectural and style constraints that agents must never violate.
@@ -121,7 +121,10 @@ flowchart TD
 │   ├── config.toml                  # Supabase local ports & configuration
 │   └── seed.sql                     # Seed data for development
 ├── eslint.config.js                 # ESLint flat config with Svelte 5 parser
+├── mcp-server.json                  # MCP server config for Supabase
 ├── package.json                     # Scripts, devDependencies, and test runners
+├── prompts/
+│   └── Create readme.md             # Prompt template for generating project READMEs
 ├── tsconfig.json                    # Strict TypeScript configuration
 └── vitest.config.ts                 # Vitest test runner configuration
 ```
@@ -163,7 +166,7 @@ bash scripts/quality-gate.sh
    - `task_metadata`: Ensures all feature task files (`docs/features/*/00-task.md`) have required fields (`domain`, `prd`, `status`, `traceability`).
    - `task_state`: Verifies tasks marked `DONE` have passing validation evidence matching the current codebase checksum.
    - `shellcheck`: Validates all bash scripts with ShellCheck.
-   - `lockfile`: Ensures `package-lock.json` is in sync with `package.json`.
+   - `lockfile`: Ensures the bun lockfile (`bun.lockb`) is in sync with `package.json`.
 
 2. **Change-Aware Application Checks**:
    - If only docs change (`docs/*`, `*.md`), application tests are skipped for efficiency.
@@ -182,7 +185,7 @@ bash scripts/quality-gate.sh
 | Requirement | Recommended Version | Purpose |
 | :--- | :--- | :--- |
 | **Node.js** | `>= 20.0.0` (v22.14.0 LTS verified) | Runtime for Svelte 5, Vite, Vitest, and ESLint |
-| **npm** | `>= 10.0.0` | Package manager |
+| **bun** | `>= 1.0.0` | Package manager & script runner |
 | **ShellCheck** | `>= 0.11.0` | Static analysis for framework bash scripts |
 | **Git** | `>= 2.40.0` | Version control and change-aware diff detection |
 | **Supabase CLI** | Optional / Development | Local database testing (`supabase start`, `supabase test db`) |
@@ -195,14 +198,14 @@ bash scripts/quality-gate.sh
 ### 1. Working Inside This Repository
 ```bash
 # Install dependencies
-npm ci
+bun install
 
 # Run test suites
-npm test
+bun test
 
 # Run linter and Svelte template check
-npm run lint
-npm run typecheck
+bun run lint
+bun run typecheck
 
 # Run the complete Quality Gate
 bash scripts/quality-gate.sh
@@ -210,7 +213,7 @@ bash scripts/quality-gate.sh
 
 ---
 
-## AI Agent Workflow (Antigravity & IDE)
+## AI Agent Workflow (opencode & IDE)
 
 When working with an AI agent in this framework, follow this structured process:
 
