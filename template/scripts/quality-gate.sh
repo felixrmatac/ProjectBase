@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
+cd "$(git rev-parse --show-toplevel)" || exit 1
 
 TIMESTAMP="$(date -Iseconds)"
 declare -A CHECKS_STATUS
@@ -150,12 +151,12 @@ check_lockfile() {
   if [[ ! -f "package.json" ]]; then
     return 0
   fi
-  if [[ ! -f "package-lock.json" ]]; then
-    echo "package.json exists but package-lock.json is missing. Please run npm install."
+  if [[ ! -f "bun.lockb" && ! -f "bun.lock" ]]; then
+    echo "package.json exists but bun.lock is missing. Please run bun install."
     return 1
   fi
-  if [[ "package.json" -nt "package-lock.json" ]]; then
-    echo "package.json is newer than package-lock.json. Please run npm install."
+  if [[ "package.json" -nt "bun.lockb" && "package.json" -nt "bun.lock" ]]; then
+    echo "package.json is newer than bun.lock. Please run bun install."
     return 1
   fi
   return 0
@@ -203,9 +204,9 @@ if [[ "$RUN_DOCS_ONLY" == "true" ]]; then
   skip_check "types" "documentation_change_only"
 else
   if [[ "$RUN_FRONTEND" == "true" ]]; then
-    run_check "svelte_check" npx svelte-check
-    run_check "eslint" npm run lint
-    run_check "vitest" npm run test
+    run_check "svelte_check" bunx svelte-check
+    run_check "eslint" bun run lint
+    run_check "vitest" bun run test
   else
     skip_check "svelte_check" "no_frontend_changes"
     skip_check "eslint" "no_frontend_changes"

@@ -2,7 +2,7 @@
   "description": "Configuración MCP Supabase",
   "mcpServers": {
     "supabase": {
-      "command": "npx",
+      "command": "bunx",
       "args": ["-y", "@supabase/mcp"]
     }
   }

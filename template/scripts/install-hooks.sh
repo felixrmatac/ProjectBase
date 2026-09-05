@@ -1,13 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
-# Find git root
-GIT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || true)
-
-if [[ -z "$GIT_ROOT" ]]; then
-  echo "Error: Not inside a git repository."
-  exit 1
-fi
+cd "$(git rev-parse --show-toplevel)" || exit 1
+GIT_ROOT="$(pwd)"
 
 HOOKS_DIR="$GIT_ROOT/.git/hooks"
 PRE_COMMIT_HOOK="$HOOKS_DIR/pre-commit"

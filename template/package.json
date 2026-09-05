@@ -7,9 +7,9 @@
     "test": "vitest run",
     "typecheck": "svelte-check --tsconfig ./tsconfig.json"
   },
-  "lint-staged": {
+    "lint-staged": {
     "*.{svelte,ts,js}": [
-      "svelte-check",
+      "bunx svelte-check",
       "eslint"
     ],
     "supabase/migrations/*.sql": [
