@@ -28,12 +28,16 @@ TARGET_DIR="$(pwd)/$PROJECT_NAME"
 log "Creando proyecto '$PROJECT_NAME'..."
 mkdir -p "$TARGET_DIR"
 cd "$TARGET_DIR"
-git init -b main
 
 log "Copiando plantilla base del Framework V4.1..."
 cp -a "$SCRIPT_DIR/template/." ./
+
+log "Inicializando repositorio Git y configurando hooks de seguridad..."
+git init -b main
+git config core.hooksPath .githooks || true
 
 log "Renombrando paquete a '$PROJECT_NAME'..."
 sed -i "s/\"name\": \"project\",/\"name\": \"$PROJECT_NAME\",/" package.json
 
 log "Scaffolding completado exitosamente en $TARGET_DIR"
+log "→ Siguiente paso: 'cd $PROJECT_NAME' y luego ejecuta 'npm install' (o bun install)."

@@ -3,22 +3,19 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "check": "svelte-check --tsconfig ./tsconfig.json",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
     "db:reset": "supabase db reset",
-    "db:types": "supabase gen types typescript --local > src/types/database.ts",
+    "db:types": "mkdir -p src/types && supabase gen types typescript --local > src/types/database.ts",
     "quality-gate": "npm run check && npm run lint && npm run test",
     "prepare": "git config core.hooksPath .githooks || true"
-  },
-    "lint-staged": {
-    "*.{svelte,ts,js}": [
-      "bunx svelte-check",
-      "eslint"
-    ],
-    "supabase/migrations/*.sql": [
-      "supabase test db"
-    ]
   },
   "devDependencies": {
     "@sveltejs/kit": "^2.15.2",

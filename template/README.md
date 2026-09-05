@@ -13,7 +13,7 @@ The **Agent Engineering Framework V4.1** is an engineering foundation designed s
 - **Skills**: Step-by-step agent workflows for routine engineering operations.
 - **Lazy Context**: Targeted, on-demand loading of requirements and domain specifications to minimize token usage and eliminate hallucinations.
 - **Implementation**: Modern web applications built on **Svelte 5 Runes**, TypeScript, Tailwind CSS, and Supabase.
-- **Tooling**: Portable Bash scripts for routine tasks and framework integrity.
+- **Tooling**: Standard NPM scripts in `package.json` for routine tasks and deterministic framework integrity.
 - **Validation**: An automated, change-aware **Quality Gate** that enforces deterministic verification over subjective LLM claims.
 
 ---
@@ -40,7 +40,7 @@ flowchart TD
 
 ### Architectural Principles
 
-1. **Deterministic Verification over LLM Claims**: A task is never marked complete because an LLM claims it is done. It can only reach `DONE` status when verified by machine-readable output from `scripts/quality-gate.sh`.
+1. **Deterministic Verification over LLM Claims**: A task is never marked complete because an LLM claims it is done. It can only reach `DONE` status when verified by machine-readable output from `npm run quality-gate`.
 2. **Lazy Context & Minimal Token Consumption**: Context is loaded strictly just-in-time from explicit references in `00-task.md`.
 3. **Strict State Machine**: Tasks follow `READY -> IN_PROGRESS -> IMPLEMENTED -> VALIDATING -> DONE`.
 4. **Codebase Checksum Integrity**: The Quality Gate computes an md5/sha checksum over `src/`, `supabase/`, and `package.json`. If code changes after validation, previous evidence is invalidated.
@@ -61,7 +61,7 @@ flowchart TD
 | **Linter & Code Style** | Syntax and formatting rules | `eslint.config.js` |
 | **Template Validation** | Svelte template diagnostics and types | `svelte-check` |
 | **Unit & Integration Tests**| Domain logic and component behavior | Vitest (`*.test.ts`) |
-| **Deterministic Validation**| Automated validation and checksums | `scripts/quality-gate.sh` |
+| **Deterministic Validation**| Automated validation and checksums | `npm run quality-gate` |
 
 ---
 
@@ -91,11 +91,8 @@ flowchart TD
 │   │       └── 00-task.md           # Task state and deliverables
 │   └── product/
 │       └── ui-system-prd.md         # PRD for the cognitive study UI
-├── scripts/
-│   ├── db-reset.sh                  # Reset local database
-│   ├── generate-db-types.sh         # Generate TypeScript types from Supabase
-│   ├── install-hooks.sh             # Install pre-commit quality gate hook
-│   └── quality-gate.sh              # Core change-aware deterministic validator
+├── .githooks/
+│   └── pre-commit                   # Native git hook for quality gate validation
 ├── src/
 │   ├── lib/
 │   │   ├── components/
@@ -154,10 +151,10 @@ Built under `.agents/rules/frontend-design.md`:
 
 ## Deterministic Quality Gate
 
-The Quality Gate (`scripts/quality-gate.sh`) ensures that code cannot be merged without objective validation:
+The Quality Gate (`npm run quality-gate`) ensures that code cannot be merged without objective validation:
 
 ```bash
-bash scripts/quality-gate.sh
+npm run quality-gate
 ```
 
 ### Validation Phases
@@ -186,7 +183,6 @@ bash scripts/quality-gate.sh
 | :--- | :--- | :--- |
 | **Node.js** | `>= 20.0.0` (v22.14.0 LTS verified) | Runtime for Svelte 5, Vite, Vitest, and ESLint |
 | **bun** | `>= 1.0.0` | Package manager & script runner |
-| **ShellCheck** | `>= 0.11.0` | Static analysis for framework bash scripts |
 | **Git** | `>= 2.40.0` | Version control and change-aware diff detection |
 | **Supabase CLI** | Optional / Development | Local database testing (`supabase start`, `supabase test db`) |
 | **Docker** | Optional / Development | Container runtime required by Supabase CLI |
@@ -197,18 +193,18 @@ bash scripts/quality-gate.sh
 
 ### 1. Working Inside This Repository
 ```bash
-# Install dependencies
-bun install
+# Install dependencies (automatically sets up git hooks)
+npm install
 
 # Run test suites
-bun test
+npm run test
 
 # Run linter and Svelte template check
-bun run lint
-bun run typecheck
+npm run lint
+npm run check
 
 # Run the complete Quality Gate
-bash scripts/quality-gate.sh
+npm run quality-gate
 ```
 
 ---
@@ -238,7 +234,7 @@ When working with an AI agent in this framework, follow this structured process:
    - Run Vitest and confirm all tests pass (GREEN state).
 
 5. QUALITY GATE VALIDATION
-   - Run: bash scripts/quality-gate.sh
+   - Run: npm run quality-gate
    - Must exit with code 0.
 
 6. ACCEPTANCE REVIEW & DONE
